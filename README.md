@@ -1,10 +1,4 @@
-# Archlinux on NanoPi R2S
-
-## Reference
-
-- kernel from https://github.com/friendlyarm/sd-fuse_rk3328
-- bootloader from https://github.com/armbian/build
-- install step from https://archlinuxarm.org/platforms/armv8/rockchip/rock64
+# ArchLinux on NanoPi R2S
 
 ## Install to a micro SD card
 
@@ -78,22 +72,19 @@
 
 1. Remove useless kernel.
 
-    Don't `pacman -Syu` before remove linux-aarch64.
+    Don't `pacman -Syu` before replace linux-aarch64.
 
     ```ssh
     pacman -R linux-aarch64
     ```
 
-1. Replace kernel to packaged version.
-
-    If you need. (This step is optional.)
+    Replace kernel to packaged version.
+    Prebuilt packages from https://github.com/sakapoko/linux-r2s/releases 
 
     ```sh
     pacman -U linux-r2s-5.4.75-1-aarch64.pkg.tar.xz --overwrite '/usr/lib/modules/*','/boot/*'
     pacman -U linux-r2s-headers-5.4.75-1-aarch64.pkg.tar.xz
     ```
-
-    These packages are in linux-r2s directory.
 
 1. Initialize the pacman keyring and populate the Arch Linux ARM package signing keys:
 
@@ -110,4 +101,10 @@
 
 1. Configuration OS settings.
 
-    localegen, tzselect and so on.
+    localegen, localtime and so on.
+
+## Reference
+
+- kernel from https://github.com/friendlyarm/sd-fuse_rk3328
+- bootloader from https://github.com/armbian/build
+- install step from https://archlinuxarm.org/platforms/armv8/rockchip/rock64
