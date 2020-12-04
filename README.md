@@ -103,6 +103,19 @@
 
     localegen, localtime and so on.
 
+## On NanoPi NEO3
+
+The installation is almost the same as R2S.
+Edit extlinux.conf to specify rk3328-nanopi-r2-rev02.dtb to fdt.(It works even if you don't do it.)
+
+```txt:/boot/extlinux/extlinux.conf
+label linux
+   kernel /boot/Image
+   initrd /boot/initramfs-linux.img
+   fdt /boot/dtbs/rockchip/rk3328-nanopi-r2-rev02.dtb
+   append console=ttyS2,1500000 earlycon=uart8250,mmio32,0xff130000 rw root=/dev/mmcblk0p1 rootwait rootfstype=ext4 coherent_pool=1M ethaddr=${ethaddr} serial=${serial#}
+```
+
 ## Reference
 
 - kernel from https://github.com/friendlyarm/sd-fuse_rk3328
