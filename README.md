@@ -74,7 +74,7 @@
 
     Don't `pacman -Syu` before replace linux-aarch64.
 
-    ```ssh
+    ```sh
     pacman -R linux-aarch64
     ```
 
@@ -82,9 +82,36 @@
     Prebuilt packages from https://github.com/sakapoko/linux-r2s/releases 
 
     ```sh
-    pacman -U linux-r2s-5.4.75-1-aarch64.pkg.tar.xz --overwrite '/usr/lib/modules/*','/boot/*'
-    pacman -U linux-r2s-headers-5.4.75-1-aarch64.pkg.tar.xz
+    pacman -U linux-r2s-5.11.1.arch1-2-aarch64.pkg.tar.xz --overwrite '/usr/lib/modules/*','/boot/*'
+    pacman -U linux-r2s-5.11.1.arch1-2-aarch64.pkg.tar.xz
     ```
+
+1. Edit extlinux.conf
+
+    Edit /boot/extlinux/extlinux.conf
+    Change fdt and root partition if you need.
+
+    R2S or Neo3
+
+    ```txt
+    label linux
+       kernel /boot/Image
+       initrd /boot/initramfs-linux.img
+       fdt /boot/dtbs/rockchip/rk3328-nanopi-r2-rev02.dtb
+       append console=ttyS2,1500000 earlycon=uart8250,mmio32,0xff130000 rw root=/dev/mmcblk0p1 rootwait rootfstype=ext4 coherent_pool=1M ethaddr=${ethaddr} serial=${serial#}
+    ```
+
+    R4S
+
+    ```txt
+    label linux
+        kernel /boot/Image
+        initrd /boot/initramfs-linux.img
+       fdt /boot/dtbs/rockchip/rk3399-nanopi-r4s.dtb
+       append console=ttyS2,1500000 earlycon=uart8250,mmio32,0xff1a0000 rw root=/dev/mmcblk1p1 rootwait rootfstype=ext4 coherent_pool=1M
+    ```
+
+    MAC Address cannot be specified from uboot on R4S.
 
 1. Initialize the pacman keyring and populate the Arch Linux ARM package signing keys:
 
@@ -102,19 +129,6 @@
 1. Configuration OS settings.
 
     localegen, localtime and so on.
-
-## On NanoPi NEO3
-
-The installation is almost the same as R2S.
-Edit extlinux.conf to specify rk3328-nanopi-r2-rev02.dtb to fdt.(It works even if you don't do it.)
-
-```txt:/boot/extlinux/extlinux.conf
-label linux
-   kernel /boot/Image
-   initrd /boot/initramfs-linux.img
-   fdt /boot/dtbs/rockchip/rk3328-nanopi-r2-rev02.dtb
-   append console=ttyS2,1500000 earlycon=uart8250,mmio32,0xff130000 rw root=/dev/mmcblk0p1 rootwait rootfstype=ext4 coherent_pool=1M ethaddr=${ethaddr} serial=${serial#}
-```
 
 ## Reference
 
